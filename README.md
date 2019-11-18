@@ -1,34 +1,47 @@
-# C++ Boilerplate
-
-
 ## Overview
 
-Simple starter ROS project with:
-
-- catkin
-- pub+sub node interaction
+Controlling software (one 'walker' node) to control the turtlebot as a Roomba in Gazebo.
 
 ## Standard install via command-line
 ```
-git clone --recursive https://github.com/rjb3vp/beginner_tutorials.git
-cd <path to repository>
-mkdir catkin_ws
-cd beginner_tutorials
-catkin_make install
-(OR just catkin_make if installing into existing catkin workspace)
-source ./devel/setup.bash
 
-Run program: 
 
-roscore
-rosrun beginner_tutorials listener
-rosrun beginner_tutorials talker
+Change directory to an existing or new catkin_ws
+Then do:
+
+git clone --recursive https://github.com/rjb3vp/turtlebot_navigation.git
+catkin_make
+rospack profile
+source devel/setup.bash
 
 
 ## Run From launchfile (optional rosbag)
 
 
-To use the launchfile, run:
+To use the launchfile, first execute the standard install.  Then, in catkin_ws, run:
+
+roslaunch walker mylaunch.launch
+
+
+
+
+
+roslaunch turtlebot_gazebo my_turtlebot_world.launch
+
+
+
+
+
+## Worlds Directory
+
+Stores world files for use with Gazebo.
+
+
+
+
+
+
+
 roslaunch beginner_tutorials example.launch <optional starting mean argument startMean, as an int>
 <optional use_rosbag flag, a boolean>
 
