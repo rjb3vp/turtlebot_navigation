@@ -40,6 +40,14 @@ int randomMean = 50;
 
 PathPlanner pathPlanner;
 
+
+
+
+/**
+* @brief Callback for each collision/un-collision event.
+* @param msg reference to a pointer to the incoming message of the event
+* @return none
+*/
 void reactToBump(const kobuki_msgs::BumperEvent::ConstPtr& msg) {
 
 
@@ -73,45 +81,11 @@ pathPlanner.registerBlockedLeft();
 
 
 /**
-
-* @brief Sets the range and mean for random number generation.
-
-* @param req incoming request object with params to copy
-
-* @param res outgoing result to show if errors occurred in this method
-
-* @return bool to show whether this function executed or not
-
+* @brief Main function for the node
+* @param argc standard main input
+* @param argv standard main input
+* @return error as int
 */
-
-/*
-bool setParams(beginner_tutorials::SetRandomRange::Request  &req,
-         beginner_tutorials::SetRandomRange::Response &res) {
-  if (req.mean == 0) {
-    ROS_WARN(
-"Mean value of 0 is technically permitted, but probably a mistake.");
-    ROS_INFO_STREAM("Mean updated to " << req.mean << " with range of "
-<< req.range);
-
-    res.error = false;
-    randomRange = req.range;
-    randomMean = req.mean;
-  } else if (req.mean < 0) {
-    ROS_ERROR_STREAM("Mean cannot be " << req.mean << " which is < 0");
-    res.error = true;
-  } else {
-    ROS_INFO_STREAM("Mean updated to " << req.mean
-<< " with range of " << req.range);
-    res.error = false;
-    randomRange = req.range;
-    randomMean = req.mean;
-  }
-
-  return true;
-}
-*/
-
-
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
