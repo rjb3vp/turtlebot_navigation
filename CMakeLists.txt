@@ -12,7 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   turtlebot_gazebo
+  rosbag
 )
+
+## Generate added messages and services
+#generate_messages(DEPENDENCIES std_msgs std_srvs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -205,3 +209,12 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+
+
+add_executable(walker src/walker.cpp)
+target_link_libraries(walker ${catkin_LIBRARIES})
+add_dependencies(walker ${catkin_EXPORTED_TARGETS})
+
+
