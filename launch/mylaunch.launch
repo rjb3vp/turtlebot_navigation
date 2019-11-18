@@ -1,5 +1,8 @@
 <launch>
 
+<arg name="use_rosbag" default="true"/>
+
+<node pkg="rosbag" type="record" name="rosbag" args="record -e ./target_bag.bag '/camera/*'" if="$(arg use_rosbag)"/>
 
   <group ns="walker">
     <node pkg="walker" name="walker" type="walker"/>
