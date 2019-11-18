@@ -1,0 +1,16 @@
+<launch>
+
+<arg name="use_rosbag" default="true"/>
+
+<node pkg="rosbag" type="record" name="rosbag" args="record -e ./target_bag.bag '/camera/*'" if="$(arg use_rosbag)"/>
+
+  <group ns="walker">
+    <node pkg="walker" name="walker" type="walker"/>
+  </group>
+
+
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+    <arg name="world_file"  default="$(find walker)/worlds/real_test_world5.world"/>
+  </include>
+
+</launch>
