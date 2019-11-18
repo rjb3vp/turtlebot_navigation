@@ -27,9 +27,9 @@ Bell Communications Research, Inc (Bellcore).
 bool isBlockedCenter = false;
 bool isBlockedLeft = false;
 bool isBlockedRight = false;
-float speed = 0.1;//4.0;
-float turnSpeed = 0.5;//4.0;
-int bumperLimit = 40;//23;
+float speed = 0.1;
+float turnSpeed = 0.5;
+int bumperLimit = 40;
 int bumperBuffer = 0;
 
 /*
@@ -37,11 +37,10 @@ int bumperBuffer = 0;
 * @return Instance of the object
 */
 PathPlanner::PathPlanner() {
-isBlockedCenter = false;
-isBlockedLeft = false;
-isBlockedRight = false;
-ROS_INFO_STREAM("Path planner created.");
-
+  isBlockedCenter = false;
+  isBlockedLeft = false;
+  isBlockedRight = false;
+  ROS_INFO_STREAM("Path planner created.");
 }
 
 /*
@@ -49,10 +48,10 @@ ROS_INFO_STREAM("Path planner created.");
 * @return none
 */
 void PathPlanner::registerBlockedCenter() {
-isBlockedCenter = true;
-//ros::Duration(5.0).sleep();
-bumperBuffer = bumperLimit;
-ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+  isBlockedCenter = true;
+  bumperBuffer = bumperLimit;
+  ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " "
+<< isBlockedRight);
 }
 
 /*
@@ -60,8 +59,9 @@ ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlocke
 * @return none
 */
 void PathPlanner::registerFreeCenter() {
-isBlockedCenter = false;
-ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+  isBlockedCenter = false;
+  ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " "
+<< isBlockedRight);
 }
 
 /*
@@ -69,9 +69,6 @@ ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlocke
 * @return none
 */
 void PathPlanner::registerBlockedRight() {
-//isBlockedRight = true;
-//bumperBuffer = bumperLimit;
-//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
 /*
@@ -79,8 +76,6 @@ void PathPlanner::registerBlockedRight() {
 * @return none
 */
 void PathPlanner::registerFreeRight() {
-//isBlockedRight = false;
-//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
 
@@ -89,9 +84,6 @@ void PathPlanner::registerFreeRight() {
 * @return none
 */
 void PathPlanner::registerBlockedLeft() {
-//isBlockedLeft = true;
-//bumperBuffer = bumperLimit;
-//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
 /*
@@ -99,8 +91,6 @@ void PathPlanner::registerBlockedLeft() {
 * @return none
 */
 void PathPlanner::registerFreeLeft() {
-//isBlockedLeft = false;
-//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
 
@@ -110,24 +100,19 @@ void PathPlanner::registerFreeLeft() {
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getXVelocity() {
-ROS_INFO_STREAM("Buffer is " << bumperBuffer);
-ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
-if (!isBlockedCenter && !isBlockedRight && !isBlockedLeft) {
-bumperBuffer--;
-} else {
-
-return -1.0 * speed;
-}
-
-if (bumperBuffer > 0) {//(isBlockedCenter || isBlockedRight || isBlockedLeft) {
-
-
-return -1.0 * speed;
-} else {
-return speed;
-}
-
-
+  ROS_INFO_STREAM("Buffer is " << bumperBuffer);
+  ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " "
+<< isBlockedRight);
+  if (!isBlockedCenter && !isBlockedRight && !isBlockedLeft) {
+    bumperBuffer--;
+  } else {
+    return -1.0 * speed;
+  }
+  if (bumperBuffer > 0) {
+    return -1.0 * speed;
+  } else {
+    return speed;
+  }
 }
 
 
@@ -136,7 +121,7 @@ return speed;
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getYVelocity() {
-return 0.0;
+  return 0.0;
 }
 
 /*
@@ -144,7 +129,7 @@ return 0.0;
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getZVelocity() {
-return 0.0;
+  return 0.0;
 }
 
 /*
@@ -152,26 +137,25 @@ return 0.0;
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getXTurn() {
-return 0.0;
+  return 0.0;
 }
 /*
 * @brief Called to check what the Y turn speed should be
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getYTurn() {
-return 0.0;
+  return 0.0;
 }
 /*
 * @brief Called to check what the Z turn speed should be
 * @return float desired velocity to send to the Turtlebot
 */
 float PathPlanner::getZTurn() {
-if (bumperBuffer > 0) {//if (isBlockedCenter || isBlockedRight || isBlockedLeft) {
-//bumperBuffer--;
-return turnSpeed;
-} else {
-return 0.0;
-}
+  if (bumperBuffer > 0) {
+    return turnSpeed;
+  } else {
+    return 0.0;
+  }
 }
 
 
