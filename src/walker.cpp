@@ -15,7 +15,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
+///mobile_base/events/bumper
 
 //#include <math.h>
 //#include <tf/transform_broadcaster.h>
@@ -25,6 +25,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "std_msgs/String.h"
 
 #include "geometry_msgs/Twist.h"
+#include "kobuki_msgs/BumperEvent.h"
 //#include "std_srvs/Empty.h"
 //#include "beginner_tutorials/SetRandomRange.h"
 
@@ -32,6 +33,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 int randomRange = 100;
 int randomMean = 50;
 
+
+
+
+void reactToBump(const kobuki_msgs::BumperEvent::ConstPtr& msg) {
+
+  ROS_INFO_STREAM("I heard:" << (int)(msg->state));
+
+
+}
 
 
 /**
@@ -119,6 +129,11 @@ int main(int argc, char **argv) {
 
   //ros::ServiceServer service = n.advertiseService("random_data", setParams);
   //ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+
+//ros::Subscriber sub = n.subscribe("chatter", 1000, chatterCallback);
+
+  ros::Subscriber sub = n.subscribe("/mobile_base/events/bumper", 1000, reactToBump);
+
   ros::Publisher chatter_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1000);
 
   ros::Rate loop_rate(10);
