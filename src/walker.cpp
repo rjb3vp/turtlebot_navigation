@@ -156,6 +156,7 @@ int main(int argc, char **argv) {
 
     ROS_DEBUG("HELP");
     ROS_INFO_STREAM("Data: " << msg.data.c_str());
+*/
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -182,7 +183,7 @@ int main(int argc, char **argv) {
     //br.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
 //"world", "talk"));
 
-*/
+
 
 
 
