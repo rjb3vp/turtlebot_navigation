@@ -19,10 +19,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 //#include <math.h>
 //#include <tf/transform_broadcaster.h>
-//#include <sstream>
+#include <sstream>
 //#include <cstdlib>
 #include "ros/ros.h"
-//#include "std_msgs/String.h"
+#include "std_msgs/String.h"
+
+#include "geometry_msgs/Twist.h"
 //#include "std_srvs/Empty.h"
 //#include "beginner_tutorials/SetRandomRange.h"
 
@@ -116,12 +118,12 @@ int main(int argc, char **argv) {
 
 
   //ros::ServiceServer service = n.advertiseService("random_data", setParams);
-
   //ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  ros::Publisher chatter_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1000);
 
   ros::Rate loop_rate(10);
 
-  ROS_INFO_STREAM("Hello!");
+  ROS_INFO_STREAM("Hello2!");
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
@@ -131,6 +133,20 @@ int main(int argc, char **argv) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
+
+
+//#include "std_msgs/String.h"
+
+geometry_msgs::Twist msg;
+
+msg.linear.x = 0.4;
+msg.linear.y = 0.0;
+msg.linear.z = 0.0;
+
+msg.angular.x = 0.0;
+msg.angular.y = 0.0;
+msg.angular.z = 0.0;
+chatter_pub.publish(msg);
 
 
 /*
