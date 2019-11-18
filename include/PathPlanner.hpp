@@ -18,31 +18,30 @@ Bell Communications Research, Inc (Bellcore).
 
 */
 
-#ifndef PATH_PLANNER
-#define PATH_PLANNER
+#ifndef INCLUDE_PATHPLANNER_HPP_
+#define INCLUDE_PATHPLANNER_HPP_
 
-class PathPlanner
-{
-public:
-PathPlanner();
-void registerBlockedCenter();
+class PathPlanner {
+ public:
+    PathPlanner();
+    void registerBlockedCenter();
 
-void registerFreeCenter();
+    void registerFreeCenter();
 
+    void registerBlockedRight();
 
-void registerBlockedRight();
+    void registerFreeRight();
 
-void registerFreeRight();
+    void registerBlockedLeft();
 
-void registerBlockedLeft();
+    void registerFreeLeft();
 
-void registerFreeLeft();
-float getXVelocity();
-float getYVelocity();
-float getZVelocity();
+    float getXVelocity();
+    float getYVelocity();
+    float getZVelocity();
 
-  float getXTurn();
-  float getYTurn();
-  float getZTurn();
+    float getXTurn();
+    float getYTurn();
+    float getZTurn();
 };
-#endif
+#endif  // INCLUDE_PATHPLANNER_HPP_
