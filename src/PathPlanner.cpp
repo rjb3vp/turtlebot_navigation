@@ -5,6 +5,8 @@
 
 
 bool isBlocked = false;
+float speed = 4.0;
+float turnSpeed = 4.0;
 
 PathPlanner::PathPlanner() {
 isBlocked = false;
@@ -13,16 +15,20 @@ printf("Created\n");
 }
 
 void PathPlanner::registerBlocked() {
-
+isBlocked = true;
 }
 
 void PathPlanner::registerFree() {
-
+isBlocked = false;
 }
 
 
 float PathPlanner::getXVelocity() {
+if (isBlocked) {
 return 0.0;
+} else {
+return speed;
+}
 }
 
 float PathPlanner::getYVelocity() {
@@ -42,7 +48,11 @@ return 0.0;
 }
 
 float PathPlanner::getZTurn() {
+if (isBlocked) {
+return turnSpeed;
+} else {
 return 0.0;
+}
 }
 
 
