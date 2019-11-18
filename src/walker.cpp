@@ -42,12 +42,29 @@ void reactToBump(const kobuki_msgs::BumperEvent::ConstPtr& msg) {
 
 if(msg->bumper == msg->CENTER) {
 if(msg->state == msg->RELEASED) {
-pathPlanner.registerFree();
+pathPlanner.registerFreeCenter();
 } else {
-pathPlanner.registerBlocked();
+pathPlanner.registerBlockedCenter();
 }
-//  ROS_INFO_STREAM("I heard:" << (int)(msg->state));
 }
+
+else if(msg->bumper == msg->RIGHT) {
+if(msg->state == msg->RELEASED) {
+pathPlanner.registerFreeRight();
+} else {
+pathPlanner.registerBlockedRight();
+}
+}
+ else {
+
+if(msg->state == msg->RELEASED) {
+pathPlanner.registerFreeLeft();
+} else {
+pathPlanner.registerBlockedLeft();
+}
+}
+
+
 
 }
 

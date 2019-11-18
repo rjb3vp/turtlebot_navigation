@@ -5,8 +5,18 @@ class PathPlanner
 {
 public:
 PathPlanner();
-void registerBlocked();
-void registerFree();
+void registerBlockedCenter();
+
+void registerFreeCenter();
+
+
+void registerBlockedRight();
+
+void registerFreeRight();
+
+void registerBlockedLeft();
+
+void registerFreeLeft();
 float getXVelocity();
 float getYVelocity();
 float getZVelocity();

@@ -4,31 +4,78 @@
 #include <stdio.h>
 
 
-bool isBlocked = false;
-float speed = 4.0;
-float turnSpeed = 4.0;
+bool isBlockedCenter = false;
+bool isBlockedLeft = false;
+bool isBlockedRight = false;
+float speed = 0.1;//4.0;
+float turnSpeed = 0.5;//4.0;
+int bumperLimit = 40;//23;
+int bumperBuffer = 0;
 
 PathPlanner::PathPlanner() {
-isBlocked = false;
+isBlockedCenter = false;
+isBlockedLeft = false;
+isBlockedRight = false;
 ROS_INFO_STREAM("Path planner created.");
 printf("Created\n");
 }
 
-void PathPlanner::registerBlocked() {
-isBlocked = true;
+void PathPlanner::registerBlockedCenter() {
+isBlockedCenter = true;
+//ros::Duration(5.0).sleep();
+bumperBuffer = bumperLimit;
+ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
-void PathPlanner::registerFree() {
-isBlocked = false;
+void PathPlanner::registerFreeCenter() {
+isBlockedCenter = false;
+ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+}
+
+
+void PathPlanner::registerBlockedRight() {
+//isBlockedRight = true;
+//bumperBuffer = bumperLimit;
+//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+}
+
+void PathPlanner::registerFreeRight() {
+//isBlockedRight = false;
+//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+}
+
+
+void PathPlanner::registerBlockedLeft() {
+//isBlockedLeft = true;
+//bumperBuffer = bumperLimit;
+//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+}
+
+void PathPlanner::registerFreeLeft() {
+//isBlockedLeft = false;
+//ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
 }
 
 
 float PathPlanner::getXVelocity() {
-if (isBlocked) {
-return 0.0;
+ROS_INFO_STREAM("Buffer is " << bumperBuffer);
+ROS_INFO_STREAM("" << isBlockedLeft << " " << isBlockedCenter << " " << isBlockedRight);
+if (!isBlockedCenter && !isBlockedRight && !isBlockedLeft) {
+bumperBuffer--;
+} else {
+
+return -1.0 * speed;
+}
+
+if (bumperBuffer > 0) {//(isBlockedCenter || isBlockedRight || isBlockedLeft) {
+
+
+return -1.0 * speed;
 } else {
 return speed;
 }
+
+
 }
 
 float PathPlanner::getYVelocity() {
@@ -48,7 +95,8 @@ return 0.0;
 }
 
 float PathPlanner::getZTurn() {
-if (isBlocked) {
+if (bumperBuffer > 0) {//if (isBlockedCenter || isBlockedRight || isBlockedLeft) {
+//bumperBuffer--;
 return turnSpeed;
 } else {
 return 0.0;
