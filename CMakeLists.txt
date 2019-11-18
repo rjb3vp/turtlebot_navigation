@@ -215,7 +215,7 @@ include_directories(
 
 
 
-add_executable(walker src/walker.cpp)
+add_executable(walker src/walker.cpp src/PathPlanner.cpp include/PathPlanner.hpp)
 target_link_libraries(walker ${catkin_LIBRARIES})
 add_dependencies(walker ${catkin_EXPORTED_TARGETS})
 
