@@ -26,6 +26,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include "geometry_msgs/Twist.h"
 #include "kobuki_msgs/BumperEvent.h"
+#include "PathPlanner.hpp"
 //#include "std_srvs/Empty.h"
 //#include "beginner_tutorials/SetRandomRange.h"
 
@@ -34,12 +35,19 @@ int randomRange = 100;
 int randomMean = 50;
 
 
-
+PathPlanner pathPlanner;
 
 void reactToBump(const kobuki_msgs::BumperEvent::ConstPtr& msg) {
 
-  ROS_INFO_STREAM("I heard:" << (int)(msg->state));
 
+if(msg->bumper == msg->CENTER) {
+if(msg->state == msg->RELEASED) {
+pathPlanner.registerFree();
+} else {
+pathPlanner.registerBlocked();
+}
+//  ROS_INFO_STREAM("I heard:" << (int)(msg->state));
+}
 
 }
 
@@ -138,7 +146,7 @@ int main(int argc, char **argv) {
 
   ros::Rate loop_rate(10);
 
-  ROS_INFO_STREAM("Hello2!");
+  ROS_INFO_STREAM("Hello3!");
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
@@ -154,13 +162,13 @@ int main(int argc, char **argv) {
 
 geometry_msgs::Twist msg;
 
-msg.linear.x = 0.4;
-msg.linear.y = 0.0;
-msg.linear.z = 0.0;
+msg.linear.x = pathPlanner.getXVelocity();//0.4;
+msg.linear.y = pathPlanner.getYVelocity();//0.0;
+msg.linear.z = pathPlanner.getZVelocity();//0.0;
 
-msg.angular.x = 0.0;
-msg.angular.y = 0.0;
-msg.angular.z = 0.0;
+msg.angular.x = pathPlanner.getXTurn();//0.0;
+msg.angular.y = pathPlanner.getYTurn();//0.0;
+msg.angular.z = pathPlanner.getZTurn();//0.0;
 chatter_pub.publish(msg);
 
 
