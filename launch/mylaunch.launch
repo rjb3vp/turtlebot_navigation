@@ -1,0 +1,7 @@
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+     <arg name="world_file"  default="/opt/ros/kinetic/share/turtlebot_gazebo/worlds/my_playground.world"/>
+  </include>
+
+</launch>
